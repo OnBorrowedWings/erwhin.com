@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>erwhin.com — Subdomain Architectuur</title>
+<style>
+  :root {
+    --surface: #fcfcfb;
+    --page: #f9f9f7;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --border: rgba(11,11,11,0.10);
+    --card: #ffffff;
+    --accent: #2a78d6;
+    --accent-soft: #eaf1fb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --surface: #1a1a19;
+      --page: #0d0d0d;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #8f8d86;
+      --grid: #2c2c2a;
+      --border: rgba(255,255,255,0.10);
+      --card: #212120;
+      --accent: #6ea6ee;
+      --accent-soft: #17273c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --surface: #1a1a19;
+    --page: #0d0d0d;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #8f8d86;
+    --grid: #2c2c2a;
+    --border: rgba(255,255,255,0.10);
+    --card: #212120;
+    --accent: #6ea6ee;
+    --accent-soft: #17273c;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    margin: 0 0 36px;
+    max-width: 60ch;
+  }
+  h2 {
+    font-size: 1.05rem;
+    margin: 44px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--grid);
+  }
+  p.lead {
+    color: var(--ink-2);
+    font-size: 0.94rem;
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+
+  .principle {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--grid);
+  }
+  .principle:last-child { border-bottom: none; }
+  .principle .mark {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .principle .body b {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+  }
+  .principle .body span {
+    color: var(--ink-2);
+    font-size: 0.88rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .card .domain {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .card .purpose {
+    color: var(--ink-2);
+    font-size: 0.88rem;
+  }
+  .card .repo {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--grid);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .card .repo b { color: var(--ink-2); font-weight: 600; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--grid);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>erwhin.com — Subdomain Architectuur</h1>
+  <p class="subtitle">Hoe erwhin.com is opgedeeld, en waarom — vier subdomains, elk met een eigen soort inhoud en een eigen repository.</p>
+
+  <h2>Het uitgangspunt</h2>
+
+  <div class="principle">
+    <div class="mark">1</div>
+    <div class="body">
+      <b>Eén repository per subdomain</b>
+      <span>Elk subdomain heeft precies één GitHub-repository erachter. Geen gedeelde repo voor meerdere subdomains — inhoud met een verschillend doel hoort niet in dezelfde bron.</span>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="mark">2</div>
+    <div class="body">
+      <b>De naam is een routewijzer</b>
+      <span>Aan de naam van het subdomain zie je meteen in welk deel van het geheel je bent. De naam geeft context, zonder dat je verder hoeft te lezen.</span>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="mark">3</div>
+    <div class="body">
+      <b>Indeling naar aard van de inhoud, niet naar onderwerp</b>
+      <span>De vier subdomains verschillen in wat voor soort tekst het is — levend naslagwerk, opinie, afgerond werk, of het proces zelf — niet in waar de tekst over gaat.</span>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="mark">4</div>
+    <div class="body">
+      <b>Repo-naam volgt subdomain-naam</b>
+      <span>De repository heet hetzelfde als het subdomain waarvoor hij dient, zonder <code>erwhin.com</code> erachter. Wie een repo opent, weet zonder verder zoeken welk deel van de site hij voor zich heeft.</span>
+    </div>
+  </div>
+
+  <h2>De vier subdomains</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="domain">notes.erwhin.com</div>
+      <div class="purpose">Levende onderzoeksnotities. Eén keer uitgezocht en vastgelegd als referentie; wordt bijgewerkt zodra er nieuwe informatie is, in plaats van opnieuw geschreven.</div>
+      <div class="repo"><b>repo:</b> <code>notes</code></div>
+    </div>
+    <div class="card">
+      <div class="domain">blog.erwhin.com</div>
+      <div class="purpose">Persoonlijke kijk op de maatschappij. Een opinie op een moment, geen naslagwerk dat later wordt bijgewerkt.</div>
+      <div class="repo"><b>repo:</b> <code>blog</code></div>
+    </div>
+    <div class="card">
+      <div class="domain">essays.erwhin.com</div>
+      <div class="purpose">De uitgewerkte essays uit het Idea Emergence-proces. Het eindpunt van de volledige route, van losse gedachte tot gepubliceerd stuk.</div>
+      <div class="repo"><b>repo:</b> <code>essays</code></div>
+    </div>
+    <div class="card">
+      <div class="domain">publicatiehuis.erwhin.com</div>
+      <div class="purpose">Het proces zelf: hoe het systeem, de werkwijze en de website zijn opgebouwd. De handleiding om alles te herbouwen vanaf nul, mocht pc en data verloren gaan.</div>
+      <div class="repo"><b>repo:</b> <code>publicatiehuis</code></div>
+    </div>
+  </div>
+
+  <footer>erwhin.com — Publicatiehuis</footer>
+
+</div>
+</body>
+</html>
