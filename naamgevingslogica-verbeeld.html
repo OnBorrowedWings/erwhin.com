@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naamgevingslogica — Idea Emergence</title>
+<style>
+  :root{
+    --surface: #fcfcfb;
+    --page: #f9f9f7;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --border: rgba(11,11,11,0.10);
+
+    --kennis: #1baf7a;   --kennis-soft: #e7f7f1;
+    --proces: #4a3aa7;   --proces-soft: #ece9f7;
+    --struct: #52514e;   --struct-soft: #eeeeec;
+    --instr:  #898781;   --instr-soft:  #f1f1ef;
+
+    --good: #0ca30c;
+    --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --surface: #1a1a19;
+      --page: #0d0d0d;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --border: rgba(255,255,255,0.10);
+
+      --kennis: #199e70;  --kennis-soft: #163229;
+      --proces: #9085e9;  --proces-soft: #221d3a;
+      --struct: #c3c2b7;  --struct-soft: #242424;
+      --instr:  #898781;  --instr-soft:  #202020;
+
+      --good: #0ca30c;
+      --critical: #e66767;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--page); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    padding:32px 16px;
+  }
+  .wrap{ max-width:1060px; margin:0 auto; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:38px 42px 36px;
+    box-shadow:0 1px 3px rgba(20,22,30,0.06), 0 8px 24px rgba(20,22,30,0.04);
+  }
+  h1{ font-size:1.45rem; margin:0 0 6px; text-align:center; letter-spacing:-0.01em; }
+  .subtitle{ color:var(--ink-2); font-size:0.9rem; margin:0 0 26px; text-align:center; }
+
+  .uitgangspunt{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px; }
+  .ug{ flex:1 1 300px; border-radius:12px; padding:16px 20px; border:1.5px solid var(--accent); background:var(--accent-soft); font-size:0.86rem; color:var(--ink-2); line-height:1.5; }
+  .ug b{ display:block; color:var(--accent); font-size:0.9rem; margin-bottom:4px; }
+
+  .section-label{ font-size:0.78rem; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:0.05em; margin:0 0 4px; }
+  .section-sub{ font-size:0.82rem; color:var(--ink-2); margin:0 0 16px; }
+
+  .group{ margin-bottom:18px; }
+  .group-tag{ display:inline-flex; align-items:center; gap:8px; font-size:0.8rem; font-weight:700; color:var(--gcolor); margin-bottom:8px; }
+  .group-dot{ width:9px; height:9px; border-radius:50%; background:var(--gcolor); }
+  .rows{ border:1px solid var(--grid); border-radius:10px; overflow:hidden; }
+  .row{
+    display:grid; grid-template-columns: 1.1fr 1.6fr 1.8fr; gap:14px;
+    padding:10px 16px; border-left:4px solid var(--gcolor); background:var(--page);
+    font-size:0.82rem; align-items:center;
+  }
+  .row + .row{ border-top:1px solid var(--grid); }
+  .row .type{ font-weight:700; color:var(--ink); }
+  .row .pattern{ color:var(--ink-2); font-family:ui-monospace,Menlo,monospace; font-size:0.78rem; }
+  .row .example{ color:var(--ink-2); }
+  .row .example b{ color:var(--ink); font-weight:600; }
+  @media (max-width:700px){ .row{ grid-template-columns:1fr; gap:2px; } }
+
+  .why{ display:flex; gap:18px; flex-wrap:wrap; margin-top:8px; }
+  .why-panel{ flex:1 1 320px; border-radius:12px; padding:16px 18px; background:var(--page); border:1px solid var(--grid); }
+  .why-head{ display:flex; align-items:center; gap:8px; font-size:0.86rem; font-weight:700; margin-bottom:10px; }
+  .why-head.bad{ color:var(--critical); }
+  .why-head.ok{ color:var(--good); }
+  .badge{ font-size:0.68rem; font-weight:700; border-radius:5px; padding:2px 7px; }
+  .badge.bad{ background:var(--critical); color:#fff; }
+  .badge.ok{ background:var(--good); color:#fff; }
+
+  .folders{ display:flex; gap:14px; }
+  .folder{ flex:1; background:var(--surface); border:1px solid var(--grid); border-radius:8px; padding:10px 10px 12px; }
+  .folder-name{ font-size:0.72rem; font-weight:700; color:var(--ink-2); margin-bottom:8px; }
+  .note-chip{ font-size:0.76rem; font-weight:600; background:var(--page); border:1px solid var(--grid); border-radius:6px; padding:5px 8px; text-align:center; }
+  .why-panel.bad .note-chip{ border-color:var(--critical); color:var(--critical); }
+  .why-panel.ok .note-chip{ border-color:var(--good); color:var(--good); }
+  .why-note{ font-size:0.76rem; color:var(--ink-2); margin-top:10px; line-height:1.4; }
+
+  .footer-rule{ margin-top:30px; text-align:center; font-size:0.85rem; color:var(--ink); background:var(--page); border:1px solid var(--grid); border-radius:12px; padding:14px 18px; }
+  .footer-rule b{ color:var(--proces); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Naamgevingslogica — Idea Emergence</h1>
+    <p class="subtitle">Eén regel per laag, één consistent patroon per type</p>
+
+    <div class="uitgangspunt">
+      <div class="ug" style="--accent:var(--kennis); --accent-soft:var(--kennis-soft)">
+        <b>Kennislaag</b>Titel staat los van elk essay — hij moet jaren later, in een heel ander project, nog steeds herbruikbaar zijn.
+      </div>
+      <div class="ug" style="--accent:var(--proces); --accent-soft:var(--proces-soft)">
+        <b>Proceslaag</b>Titel bevat altijd het essay-ID — hij hoort maar bij één project en moet dat project overal verraden.
+      </div>
+    </div>
+
+    <div class="section-label">Het complete overzicht</div>
+    <p class="section-sub">Vier groepen, elk met hun eigen patroon.</p>
+
+    <div class="group">
+      <div class="group-tag" style="--gcolor:var(--kennis)"><span class="group-dot"></span>Kennis — evergreen</div>
+      <div class="rows" style="--gcolor:var(--kennis)">
+        <div class="row" style="--gcolor:var(--kennis)"><span class="type">Raw Material</span><span class="pattern">vrij, functioneel</span><span class="example">"Vonk — getal 3 in overgangsrituelen"</span></div>
+        <div class="row" style="--gcolor:var(--kennis)"><span class="type">Note</span><span class="pattern">bewering als titel</span><span class="example">"De drieslag markeert een afgerond geheel"</span></div>
+        <div class="row" style="--gcolor:var(--kennis)"><span class="type">Concept</span><span class="pattern">Concept — [thema]</span><span class="example"><b>Concept</b> — Getallensymboliek</span></div>
+        <div class="row" style="--gcolor:var(--kennis)"><span class="type">Symbool</span><span class="pattern">Symbool — [thema]</span><span class="example"><b>Symbool</b> — De drieslag</span></div>
+        <div class="row" style="--gcolor:var(--kennis)"><span class="type">Boek</span><span class="pattern">Boek — [bron]</span><span class="example"><b>Boek</b> — Kreider 2017</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-tag" style="--gcolor:var(--proces)"><span class="group-dot"></span>Proces — per essay-project</div>
+      <div class="rows" style="--gcolor:var(--proces)">
+        <div class="row" style="--gcolor:var(--proces)"><span class="type">Essaymap</span><span class="pattern">[ID] — [leesbare naam]</span><span class="example"><b>A007</b> — Drieslag</span></div>
+        <div class="row" style="--gcolor:var(--proces)"><span class="type">MOC</span><span class="pattern">[ID] — MOC</span><span class="example"><b>A007</b> — MOC</span></div>
+        <div class="row" style="--gcolor:var(--proces)"><span class="type">Fase 5–8 elementen</span><span class="pattern">[ID] — [Element]</span><span class="example"><b>A007</b> — Kern, <b>A007</b> — Introductie</span></div>
+        <div class="row" style="--gcolor:var(--proces)"><span class="type">Blog: Redactie</span><span class="pattern">[ID] — Redactie</span><span class="example"><b>A013</b> — Redactie</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-tag" style="--gcolor:var(--struct)"><span class="group-dot"></span>Structuur</div>
+      <div class="rows" style="--gcolor:var(--struct)">
+        <div class="row" style="--gcolor:var(--struct)"><span class="type">Publicatiehuis</span><span class="pattern">kale, unieke naam</span><span class="example">"Publicatiehuis" — geen voorvoegsel</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-tag" style="--gcolor:var(--instr)"><span class="group-dot"></span>Instrument</div>
+      <div class="rows" style="--gcolor:var(--instr)">
+        <div class="row" style="--gcolor:var(--instr)"><span class="type">Template / Prompt</span><span class="pattern">Template — [naam] / Prompt — [naam]</span><span class="example"><b>Template</b> — Note</span></div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:32px">Waarom het ID verplicht is</div>
+    <p class="section-sub">Elke essay doorloopt dezelfde elementnamen — zonder ID botsen ze gegarandeerd.</p>
+
+    <div class="why">
+      <div class="why-panel bad">
+        <div class="why-head bad">Zonder ID <span class="badge bad">botsing</span></div>
+        <div class="folders">
+          <div class="folder">
+            <div class="folder-name">📁 Drieslag</div>
+            <div class="note-chip">Introductie</div>
+          </div>
+          <div class="folder">
+            <div class="folder-name">📁 Getallensymboliek</div>
+            <div class="note-chip">Introductie</div>
+          </div>
+        </div>
+        <div class="why-note">[[Introductie]] is nu dubbelzinnig — Obsidian moet gaan disambigueren met het volledige pad, en dat is precies wat titel-linken breekt.</div>
+      </div>
+      <div class="why-panel ok">
+        <div class="why-head ok">Met ID <span class="badge ok">eenduidig</span></div>
+        <div class="folders">
+          <div class="folder">
+            <div class="folder-name">📁 A007 — Drieslag</div>
+            <div class="note-chip">A007 — Introductie</div>
+          </div>
+          <div class="folder">
+            <div class="folder-name">📁 A012 — Getallensymboliek</div>
+            <div class="note-chip">A012 — Introductie</div>
+          </div>
+        </div>
+        <div class="why-note">Elke titel is nu uniek in de hele vault, ongeacht hoeveel essay-projecten er ooit nog bijkomen.</div>
+      </div>
+    </div>
+
+    <div class="footer-rule">
+      Zelfde scheidingsteken overal, in elke laag — zo zie je in één oogopslag of je naar <b>kennis</b>, <b>proces</b>, structuur of instrument kijkt.
+    </div>
+  </div>
+</div>
+</body>
+</html>

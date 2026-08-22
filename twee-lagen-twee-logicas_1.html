@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twee lagen, twee logica's</title>
+<style>
+  :root{
+    --surface: #fcfcfb;
+    --page: #f9f9f7;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --border: rgba(11,11,11,0.10);
+    --kennis: #1baf7a;
+    --kennis-soft: #e7f7f1;
+    --proces: #4a3aa7;
+    --proces-soft: #ece9f7;
+    --blue: #2a78d6;
+    --red: #e34948;
+    --mid: #f0efec;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --surface: #1a1a19;
+      --page: #0d0d0d;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --border: rgba(255,255,255,0.10);
+      --kennis: #199e70;
+      --kennis-soft: #163229;
+      --proces: #9085e9;
+      --proces-soft: #221d3a;
+      --blue: #3987e5;
+      --red: #e66767;
+      --mid: #383835;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--page); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    padding:32px 16px;
+  }
+  .wrap{ max-width:1040px; margin:0 auto; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:36px 40px 34px;
+    box-shadow:0 1px 3px rgba(20,22,30,0.06), 0 8px 24px rgba(20,22,30,0.04);
+  }
+  h1{ font-size:1.4rem; margin:0 0 6px; letter-spacing:-0.01em; text-align:center; }
+  .subtitle{ color:var(--ink-2); font-size:0.92rem; margin:0 0 30px; text-align:center; }
+
+  .panels{ display:flex; gap:22px; flex-wrap:wrap; }
+  .panel{
+    flex:1 1 420px; min-width:320px;
+    background:var(--page); border:1px solid var(--grid); border-radius:14px;
+    padding:22px 24px 24px; border-left:5px solid var(--accent);
+  }
+  .panel--kennis{ --accent: var(--kennis); }
+  .panel--proces{ --accent: var(--proces); }
+
+  .panel-head{ display:flex; align-items:center; gap:12px; margin-bottom:4px; }
+  .icon{ width:34px; height:34px; flex:0 0 auto; }
+  .panel-title{ font-size:1.02rem; font-weight:700; color:var(--ink); letter-spacing:0.01em; }
+  .panel-tag{
+    display:inline-block; font-size:0.72rem; font-weight:600; color:var(--accent);
+    background:var(--accent-soft); border-radius:6px; padding:2px 8px; margin-top:2px;
+  }
+  .panel--kennis .panel-tag{ --accent-soft: var(--kennis-soft); }
+  .panel--proces .panel-tag{ --accent-soft: var(--proces-soft); }
+
+  .pipeline{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:18px 0 16px; }
+  .chip{
+    font-size:0.78rem; font-weight:600; color:var(--ink); background:var(--surface);
+    border:1px solid var(--grid); border-radius:8px; padding:6px 10px;
+  }
+  .arrow{ color:var(--muted); font-size:0.85rem; }
+
+  .rule-box{
+    background:var(--surface); border:1px solid var(--grid); border-radius:10px;
+    padding:12px 14px; font-size:0.84rem; color:var(--ink-2); line-height:1.5; margin-top:14px;
+  }
+  .rule-box b{ color:var(--ink); }
+
+  .props{ list-style:none; margin:14px 0 0; padding:0; font-size:0.82rem; color:var(--ink-2); }
+  .props li{ padding:3px 0 3px 16px; position:relative; }
+  .props li::before{ content:"—"; position:absolute; left:0; color:var(--muted); }
+
+  .spectrum-label{ font-size:0.78rem; font-weight:700; color:var(--ink); margin:20px 0 8px; }
+  .bar-wrap{ position:relative; margin-top:26px; height:66px; }
+  .bar{
+    height:14px; border-radius:7px;
+    background: linear-gradient(to right, var(--blue) 0%, var(--mid) 50%, var(--red) 100%);
+  }
+  .bar-end{ position:absolute; top:26px; font-size:0.72rem; color:var(--ink-2); max-width:150px; line-height:1.4; }
+  .bar-end.left{ left:0; text-align:left; }
+  .bar-end.right{ right:0; text-align:right; }
+  .tick{ position:absolute; top:-20px; font-size:0.7rem; font-weight:600; color:var(--ink-2); transform:translateX(-50%); }
+  .tick::after{
+    content:""; position:absolute; top:20px; left:50%; width:1px; height:8px;
+    background:var(--grid); transform:translateX(-50%);
+  }
+
+  .footer-rule{
+    margin-top:26px; text-align:center; font-size:0.86rem; color:var(--ink);
+    background:var(--page); border:1px solid var(--grid); border-radius:12px; padding:14px 18px;
+  }
+  .footer-rule b{ color:var(--proces); }
+  .footer-rule .and{ color:var(--muted); font-weight:600; margin:0 8px; }
+  .footer-rule .k{ color:var(--kennis); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Twee lagen, twee logica's</h1>
+    <p class="subtitle">Het Idea Emergence-systeem in één beeld</p>
+
+    <div class="panels">
+      <div class="panel panel--kennis">
+        <div class="panel-head">
+          <svg class="icon" viewBox="0 0 34 34" fill="none">
+            <path d="M11 12c-3 0-5.5 2.2-5.5 5s2.5 5 5.5 5c4 0 5-10 11-10 3 0 5.5 2.2 5.5 5s-2.5 5-5.5 5c-6 0-7-10-11-10z"
+                  stroke="var(--kennis)" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <div class="panel-title">Kennislaag</div>
+            <span class="panel-tag">evergreen</span>
+          </div>
+        </div>
+
+        <div class="pipeline">
+          <span class="chip">Raw Material</span><span class="arrow">→</span>
+          <span class="chip">Notes</span><span class="arrow">→</span>
+          <span class="chip">Concepts / Symbols</span>
+        </div>
+
+        <ul class="props">
+          <li>bestaat los van elk essay, blijft na publicatie gewoon staan</li>
+          <li>wordt jarenlang hergebruikt in steeds nieuwe essays</li>
+          <li>heeft geen essay-ID nodig — mag er zelfs nooit een dragen</li>
+        </ul>
+
+        <div class="rule-box">Titel = <b>wat de notitie beweert</b>. Nooit een essaynaam of ID erin.</div>
+      </div>
+
+      <div class="panel panel--proces">
+        <div class="panel-head">
+          <svg class="icon" viewBox="0 0 34 34" fill="none">
+            <path d="M4 9c0-1.1.9-2 2-2h7l2.5 3H28c1.1 0 2 .9 2 2v13c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V9z"
+                  stroke="var(--proces)" stroke-width="2.2" stroke-linejoin="round"/>
+            <text x="17" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="var(--proces)" font-family="ui-monospace,Menlo,monospace">A007</text>
+          </svg>
+          <div>
+            <div class="panel-title">Proceslaag</div>
+            <span class="panel-tag">precies 1 essay-project</span>
+          </div>
+        </div>
+
+        <div class="pipeline">
+          <span class="chip">MOC</span><span class="arrow">→</span>
+          <span class="chip">Fase 5–6</span><span class="arrow">→</span>
+          <span class="chip">Fase 7–8</span>
+        </div>
+
+        <div class="spectrum-label">Binnen deze laag: van ratio naar emotie</div>
+        <div class="bar-wrap">
+          <span class="tick" style="left:12.5%">Fase 5</span>
+          <span class="tick" style="left:37.5%">Fase 6</span>
+          <span class="tick" style="left:62.5%">Fase 7</span>
+          <span class="tick" style="left:87.5%">Fase 8</span>
+          <div class="bar"></div>
+          <span class="bar-end left">RATIO<br>klopt de redenering?</span>
+          <span class="bar-end right">EMOTIE<br>relevant voor de lezer?</span>
+        </div>
+
+        <ul class="props">
+          <li>hoort bij precies één essay, van MOC tot publicatie</li>
+          <li>dezelfde elementnamen komen in elk project terug</li>
+          <li>essay-ID (A007…) is verplicht in elke notitietitel</li>
+        </ul>
+
+        <div class="rule-box">Titel = <b>ID + element</b>. Nooit zonder essaycontext.</div>
+      </div>
+    </div>
+
+    <div class="footer-rule">
+      <span class="k">Kennis</span> linkt nooit naar een essay <span class="and">·</span> <b>Proces</b> bestaat nooit zonder essay-ID — wissel je dat om, dan botst het systeem.
+    </div>
+  </div>
+</div>
+</body>
+</html>

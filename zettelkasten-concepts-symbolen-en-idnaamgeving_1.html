@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Van Note tot essaymap — Concepts, Symbolen en het ID-systeem</title>
+<style>
+  :root{
+    --bg:#eef0f4;
+    --card:#ffffff;
+    --ink:#1f2430;
+    --muted:#5b6472;
+    --line:#33394a;
+    --concept:#0e8a7d;
+    --concept-soft:#e3f4f1;
+    --symbol:#b23a6b;
+    --symbol-soft:#fbe7ef;
+    --moc:#5b3ee0;
+    --moc-soft:#efe9fc;
+    --border:#dde1e8;
+    --node:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14161c;
+      --card:#1c1f28;
+      --ink:#eceef2;
+      --muted:#9aa3b2;
+      --line:#c7ccd6;
+      --concept:#4fd3c2;
+      --concept-soft:#173330;
+      --symbol:#ea7fae;
+      --symbol-soft:#3a2030;
+      --moc:#9c85f2;
+      --moc-soft:#26203a;
+      --border:#2b303c;
+      --node:#232733;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:32px 16px;
+  }
+  .wrap{ max-width:1020px; margin:0 auto; }
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:36px 40px 32px;
+    box-shadow:0 1px 3px rgba(20,22,30,0.06), 0 8px 24px rgba(20,22,30,0.04);
+  }
+  h1{ font-size:1.5rem; margin:0 0 6px; letter-spacing:-0.01em; }
+  .subtitle{ color:var(--muted); font-size:0.95rem; margin:0 0 26px; max-width:680px; line-height:1.5; }
+  .section-label{
+    text-transform:uppercase; letter-spacing:0.06em; font-size:0.72rem;
+    color:var(--muted); font-weight:600; margin:26px 0 10px;
+  }
+  .section-label:first-of-type{ margin-top:0; }
+  .node-title{ font-size:11.5px; font-weight:600; fill:var(--ink); }
+  .node-id{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:10px; fill:var(--muted); }
+  .hub-title{ font-size:13px; font-weight:700; }
+  .arrow-label{ font-size:10.5px; font-weight:600; }
+  .legend{ display:flex; gap:22px; flex-wrap:wrap; margin:14px 0 4px; font-size:0.85rem; color:var(--muted); }
+  .legend-item{ display:flex; align-items:center; gap:8px; }
+  .dot{ width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .swatch{ width:26px; height:0; border-top:2px solid var(--line); }
+  hr{ border:none; border-top:1px solid var(--border); margin:30px 0 8px; }
+  .footnote{ color:var(--muted); font-size:0.82rem; line-height:1.55; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Van losse Note tot essaymap</h1>
+    <p class="subtitle">Hoe Concepts en Symbolen materiaal verzamelen uit de kennislaag, hoe dat samenkomt in een nieuwe MOC, en hoe die MOC vervolgens een essaymap wordt met het ID-nummer als naamgevingsscharnier.</p>
+
+    <div class="section-label">1 — De kennislaag: Notes verzamelen zich in Concepts en Symbolen</div>
+
+    <svg viewBox="0 0 960 380" width="100%" style="overflow:visible">
+      <defs>
+        <marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill="var(--line)"/>
+        </marker>
+        <marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill="var(--concept)"/>
+        </marker>
+        <marker id="a3" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill="var(--symbol)"/>
+        </marker>
+      </defs>
+
+      <!-- Note -> hub links -->
+      <g stroke="var(--line)" stroke-width="1.8" fill="none" marker-end="url(#a1)">
+        <path d="M95,66 L150,138"/>
+        <path d="M305,56 L230,138"/>
+        <path d="M635,56 L700,138"/>
+        <path d="M845,66 L790,138"/>
+      </g>
+
+      <!-- Notes -->
+      <g>
+        <rect x="20" y="20" width="150" height="46" rx="10" fill="var(--node)" stroke="var(--line)" stroke-width="1.4"/>
+        <text x="95" y="39" text-anchor="middle" class="node-title">Drie is het kleinste</text>
+        <text x="95" y="53" text-anchor="middle" class="node-title">getal met een midden</text>
+
+        <rect x="230" y="10" width="150" height="46" rx="10" fill="var(--node)" stroke="var(--line)" stroke-width="1.4"/>
+        <text x="305" y="29" text-anchor="middle" class="node-title">Herhaling in drie stappen</text>
+        <text x="305" y="43" text-anchor="middle" class="node-title">wekt verwachting</text>
+
+        <rect x="560" y="10" width="150" height="46" rx="10" fill="var(--node)" stroke="var(--line)" stroke-width="1.4"/>
+        <text x="635" y="29" text-anchor="middle" class="node-title">De drieslag markeert</text>
+        <text x="635" y="43" text-anchor="middle" class="node-title">een afgerond geheel</text>
+
+        <rect x="770" y="20" width="150" height="46" rx="10" fill="var(--node)" stroke="var(--line)" stroke-width="1.4"/>
+        <text x="845" y="39" text-anchor="middle" class="node-title">Drie klopjes op de deur</text>
+        <text x="845" y="53" text-anchor="middle" class="node-title">roepen spanning op</text>
+      </g>
+
+      <!-- Concept hub -->
+      <rect x="95" y="140" width="190" height="52" rx="12" fill="var(--concept-soft)" stroke="var(--concept)" stroke-width="2"/>
+      <text x="190" y="163" text-anchor="middle" class="hub-title" fill="var(--concept)">Concept</text>
+      <text x="190" y="180" text-anchor="middle" class="node-id">Getallensymboliek</text>
+
+      <!-- Symbol hub -->
+      <rect x="645" y="140" width="190" height="52" rx="12" fill="var(--symbol-soft)" stroke="var(--symbol)" stroke-width="2"/>
+      <text x="740" y="163" text-anchor="middle" class="hub-title" fill="var(--symbol)">Symbool</text>
+      <text x="740" y="180" text-anchor="middle" class="node-id">De drieslag</text>
+
+      <!-- hub -> MOC -->
+      <path d="M220,192 C 300,240 380,255 420,262" stroke="var(--concept)" stroke-width="2.2" fill="none" marker-end="url(#a2)"/>
+      <text x="270" y="235" class="arrow-label" fill="var(--concept)">logica-materiaal</text>
+
+      <path d="M710,192 C 620,240 560,255 545,262" stroke="var(--symbol)" stroke-width="2.2" fill="none" marker-end="url(#a3)"/>
+      <text x="600" y="235" class="arrow-label" fill="var(--symbol)" text-anchor="end">beeld-materiaal</text>
+
+      <!-- MOC node -->
+      <rect x="390" y="264" width="180" height="56" rx="12" fill="var(--moc-soft)" stroke="var(--moc)" stroke-width="2"/>
+      <text x="480" y="288" text-anchor="middle" class="hub-title" fill="var(--moc)">A007 — MOC</text>
+      <text x="480" y="304" text-anchor="middle" class="node-id">nieuw essay-project</text>
+
+      <path d="M480,320 L480,352" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="4,3" fill="none" marker-end="url(#a1)"/>
+      <text x="480" y="372" text-anchor="middle" class="node-id" fill="var(--muted)">wordt de essaymap →</text>
+    </svg>
+
+    <div class="legend">
+      <div class="legend-item"><span class="swatch"></span> Note linkt naar hub — backlink verschijnt automatisch</div>
+      <div class="legend-item"><span class="dot" style="background:var(--concept)"></span> Concept — voedt vooral fase 5–6 (logica)</div>
+      <div class="legend-item"><span class="dot" style="background:var(--symbol)"></span> Symbool — voedt vooral fase 7 (emotie)</div>
+    </div>
+
+    <hr>
+
+    <div class="section-label">2 — De proceslaag: de essaymap met het ID als voorvoegsel</div>
+
+    <svg viewBox="0 0 960 330" width="100%" style="overflow:visible">
+      <rect x="20" y="14" width="920" height="300" rx="14" fill="var(--bg)" stroke="var(--line)" stroke-width="1.6" stroke-dasharray="0"/>
+      <text x="44" y="42" class="hub-title" fill="var(--ink)">📁 A007 — Drieslag</text>
+      <text x="44" y="60" class="node-id">essaymap, in elke tool onder deze naam</text>
+
+      <rect x="760" y="24" width="150" height="34" rx="9" fill="var(--moc-soft)" stroke="var(--moc)" stroke-width="1.6"/>
+      <text x="835" y="46" text-anchor="middle" class="node-id" fill="var(--moc)" font-weight="700">A007 — MOC</text>
+
+      <!-- Fase 5 -->
+      <text x="44" y="98" class="node-title" fill="var(--muted)">Fase 5 — Exploration</text>
+      <g>
+        <rect x="220" y="80" width="120" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="280" y="99" text-anchor="middle" class="node-id">A007 — Why</text>
+        <rect x="350" y="80" width="130" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="415" y="99" text-anchor="middle" class="node-id">A007 — Themes</text>
+        <rect x="490" y="80" width="190" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="585" y="99" text-anchor="middle" class="node-id">A007 — Reasoning-flow</text>
+      </g>
+
+      <!-- Fase 6 -->
+      <text x="44" y="148" class="node-title" fill="var(--muted)">Fase 6 — Story line</text>
+      <text x="44" y="162" class="node-title" fill="var(--muted)">selection</text>
+      <g>
+        <rect x="220" y="132" width="120" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="280" y="151" text-anchor="middle" class="node-id">A007 — Kern</text>
+        <rect x="350" y="132" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="425" y="151" text-anchor="middle" class="node-id">A007 — Verhaallijn</text>
+        <rect x="510" y="132" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="585" y="151" text-anchor="middle" class="node-id">A007 — Samenhang</text>
+      </g>
+
+      <!-- Fase 7 -->
+      <text x="44" y="200" class="node-title" fill="var(--muted)">Fase 7 — Crafting a</text>
+      <text x="44" y="214" class="node-title" fill="var(--muted)">Story</text>
+      <g>
+        <rect x="220" y="184" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="295" y="203" text-anchor="middle" class="node-id">A007 — Introductie</text>
+        <rect x="380" y="184" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="455" y="203" text-anchor="middle" class="node-id">A007 — Conclusion</text>
+        <rect x="540" y="184" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="615" y="203" text-anchor="middle" class="node-id">A007 — Vorm-stijl</text>
+      </g>
+
+      <!-- Fase 8 -->
+      <text x="44" y="252" class="node-title" fill="var(--muted)">Fase 8 — Publication</text>
+      <g>
+        <rect x="220" y="236" width="120" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="280" y="255" text-anchor="middle" class="node-id">A007 — Title</text>
+        <rect x="350" y="236" width="120" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="410" y="255" text-anchor="middle" class="node-id">A007 — Tags</text>
+        <rect x="480" y="236" width="150" height="30" rx="8" fill="var(--node)" stroke="var(--line)"/>
+        <text x="555" y="255" text-anchor="middle" class="node-id">A007 — Promotion</text>
+      </g>
+
+      <text x="44" y="292" class="node-id" fill="var(--muted)">↑ zelfde ID overal — typ "A007" in de quick switcher en het hele project verschijnt</text>
+    </svg>
+
+    <p class="footnote">De map draagt het ID plus de leesbare naam ("A007 — Drieslag"), zodat het project ook buiten Obsidian herkenbaar blijft. De notities daarbinnen dragen alleen het kale ID, omdat de map de context al geeft — zo blijven de titels kort, terwijl elke titel toch uniek is ten opzichte van elk ander essay-project.</p>
+  </div>
+</div>
+</body>
+</html>
