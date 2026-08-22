@@ -1,0 +1,646 @@
+<title>4MAT Leermodel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #F5F6FA;
+    --bg-elevated: #FFFFFF;
+    --bg-sunken: #ECEEF5;
+    --text: #1B1E27;
+    --text-muted: #565C6D;
+    --text-faint: #8489A0;
+    --border: #DADDE6;
+    --border-strong: #C3C7D6;
+
+    --why: #B8451F;
+    --why-soft: #F4DED0;
+    --why-ink: #7A2C12;
+
+    --what: #93690C;
+    --what-soft: #F1E3BE;
+    --what-ink: #634608;
+
+    --how: #16755F;
+    --how-soft: #CFE9E1;
+    --how-ink: #0E4C3E;
+
+    --if: #4A3A93;
+    --if-soft: #DFDAF3;
+    --if-ink: #322766;
+
+    --shadow: 0 1px 2px rgba(27,30,39,0.04), 0 6px 20px rgba(27,30,39,0.06);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #14161D;
+      --bg-elevated: #1B1E28;
+      --bg-sunken: #10121A;
+      --text: #E8E9F2;
+      --text-muted: #A2A7BC;
+      --text-faint: #6C7189;
+      --border: #2C2F3D;
+      --border-strong: #3A3E52;
+
+      --why: #E28A5F;
+      --why-soft: #3B2416;
+      --why-ink: #F2C1A3;
+
+      --what: #D8B24C;
+      --what-soft: #3A2F13;
+      --what-ink: #EDD48F;
+
+      --how: #4FC0A3;
+      --how-soft: #123229;
+      --how-ink: #A5E4D1;
+
+      --if: #A493E8;
+      --if-soft: #251E42;
+      --if-ink: #C9BEF2;
+
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #14161D;
+    --bg-elevated: #1B1E28;
+    --bg-sunken: #10121A;
+    --text: #E8E9F2;
+    --text-muted: #A2A7BC;
+    --text-faint: #6C7189;
+    --border: #2C2F3D;
+    --border-strong: #3A3E52;
+
+    --why: #E28A5F;
+    --why-soft: #3B2416;
+    --why-ink: #F2C1A3;
+
+    --what: #D8B24C;
+    --what-soft: #3A2F13;
+    --what-ink: #EDD48F;
+
+    --how: #4FC0A3;
+    --how-soft: #123229;
+    --how-ink: #A5E4D1;
+
+    --if: #A493E8;
+    --if-soft: #251E42;
+    --if-ink: #C9BEF2;
+
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ color-scheme: light dark; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  h1,h2,h3{
+    font-family: "Fraunces", Georgia, serif;
+    text-wrap: balance;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .eyebrow{
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 0.9rem;
+  }
+
+  header.hero{
+    margin-bottom: 3.5rem;
+  }
+  header.hero h1{
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    line-height: 1.03;
+    letter-spacing: -0.01em;
+  }
+  header.hero .dek{
+    margin-top: 1.1rem;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 62ch;
+  }
+  header.hero .meta{
+    margin-top: 1.4rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+    color: var(--text-faint);
+  }
+
+  p{ margin: 0 0 1rem; max-width: 68ch; }
+  p:last-child{ margin-bottom: 0; }
+
+  section{
+    margin-top: 3.6rem;
+    padding-top: 3.6rem;
+    border-top: 1px solid var(--border);
+  }
+  section:first-of-type{ border-top: none; padding-top: 0; }
+
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .section-head .q{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.18rem 0.55rem;
+    border-radius: 7px;
+  }
+  .section-head h2{
+    font-size: 1.7rem;
+  }
+  .q-why{ background: var(--why-soft); color: var(--why-ink); }
+  .q-what{ background: var(--what-soft); color: var(--what-ink); }
+  .q-how{ background: var(--how-soft); color: var(--how-ink); }
+  .q-if{ background: var(--if-soft); color: var(--if-ink); }
+
+  /* ---- Diagram ---- */
+  .diagram-wrap{
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem 0 1rem;
+  }
+  .diagram-frame{
+    width: min(100%, 460px);
+  }
+  svg.compass text{
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  .wedge{ opacity: 0.9; }
+  .step-dot{ fill: var(--bg-elevated); stroke-width: 2px; }
+  .step-label{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9.5px;
+    fill: var(--text-muted);
+  }
+  .step-num{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .quad-label{
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .quad-sub{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+  .center-label{
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 22px;
+    fill: var(--text);
+  }
+  .center-sub{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    fill: var(--text-faint);
+    letter-spacing: 0.08em;
+  }
+
+  .diagram-legend{
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .diagram-legend span{ display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend-dot{
+    width: 9px; height: 9px; border-radius: 50%; display: inline-block;
+  }
+
+  /* ---- Cards / grids ---- */
+  .type-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 620px){ .type-grid{ grid-template-columns: 1fr; } }
+
+  .type-card{
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .type-card .kicker{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+  .type-card h3{
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .type-card p{ font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .type-card .ask{
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-faint);
+  }
+  .type-card.why{ border-top: 3px solid var(--why); }
+  .type-card.what{ border-top: 3px solid var(--what); }
+  .type-card.how{ border-top: 3px solid var(--how); }
+  .type-card.if{ border-top: 3px solid var(--if); }
+  .type-card.why .kicker{ color: var(--why); }
+  .type-card.what .kicker{ color: var(--what); }
+  .type-card.how .kicker{ color: var(--how); }
+  .type-card.if .kicker{ color: var(--if); }
+
+  /* ---- Step table ---- */
+  .table-scroll{ overflow-x: auto; margin-top: 1.6rem; }
+  table.steps{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 600px;
+  }
+  table.steps th{
+    text-align: left;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 500;
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  table.steps td{
+    padding: 0.75rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.steps tr:last-child td{ border-bottom: none; }
+  .num-cell{
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-faint);
+    width: 2rem;
+  }
+  .step-name{ font-weight: 600; }
+  .mode-pill{
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    padding: 0.08rem 0.4rem;
+    border-radius: 5px;
+    background: var(--bg-sunken);
+    color: var(--text-muted);
+    margin-left: 0.4rem;
+  }
+  .quad-cell{ white-space: nowrap; }
+  .swatch{
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+  }
+
+  /* ---- Checklist ---- */
+  .checklist{
+    list-style: none;
+    margin: 1.6rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .checklist li{
+    display: grid;
+    grid-template-columns: 2.1rem 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+  .checklist .n{
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    padding-top: 0.1rem;
+  }
+  .checklist strong{ display:block; margin-bottom: 0.15rem; }
+  .checklist span.desc{ color: var(--text-muted); font-size: 0.92rem; }
+
+  /* ---- Use-cases ---- */
+  .use-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 2rem;
+    margin-top: 1.6rem;
+  }
+  @media (max-width: 620px){ .use-grid{ grid-template-columns: 1fr; } }
+  .use-col h3{
+    font-size: 1rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+  }
+  .use-col ul{ margin: 0; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.94rem; }
+  .use-col li{ margin-bottom: 0.5rem; }
+  .use-col.yes h3{ color: var(--how-ink); }
+  .use-col.no h3{ color: var(--text-faint); }
+
+  .callout{
+    margin-top: 2rem;
+    background: var(--if-soft);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    border: 1px solid var(--border);
+  }
+  .callout .eyebrow{ color: var(--if-ink); margin-bottom: 0.5rem; }
+  .callout p{ color: var(--text); font-size: 0.96rem; max-width: none; }
+
+  footer{
+    margin-top: 4.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--text-faint);
+  }
+  footer a{ color: var(--text-muted); }
+  footer ul{ margin: 0.6rem 0 0; padding-left: 1.1rem; }
+  footer li{ margin-bottom: 0.3rem; }
+
+  a{ color: inherit; }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="eyebrow">Leermodel &middot; Bernice McCarthy, 1980</p>
+    <h1>4MAT</h1>
+    <p class="dek">Een cyclisch ontwerpmodel voor leren en lesgeven, gebouwd rond vier vragen die elke leerling zich stelt: <em>Waarom, Wat, Hoe</em> en <em>Wat als</em>. Onderstaand overzicht volgt bewust diezelfde volgorde.</p>
+    <p class="meta">Bron: 4MAT 4Learning &middot; synthese van Kolb's leerstijlen en links/rechts-hersenonderzoek</p>
+  </header>
+
+  <section id="waarom">
+    <div class="section-head"><span class="q q-why">Waarom</span><h2>De meerwaarde</h2></div>
+    <p>De meeste lessen, presentaties en trainingen worden onbewust ontworpen voor het leerprofiel van de maker zelf. Een liefhebber van theorie opent met definities; een doener opent met een oefening. Wie in dat ene profiel geen aansluiting vindt, haakt af &mdash; niet omdat de inhoud niet klopt, maar omdat de ingang ontbreekt.</p>
+    <p>4MAT lost dat op door elke leerervaring door vier fasen te laten lopen die samen alle leerstijlen bedienen: eerst persoonlijke relevantie, dan begrip van de theorie, dan geoefende toepassing, en ten slotte vrije, eigen toepassing. Niemand wordt overgeslagen, en wie zelf leert kan dezelfde vier vragen op zichzelf toepassen om een onderwerp echt eigen te maken in plaats van er oppervlakkig langs te gaan.</p>
+    <p>Het tweede voordeel is structuur: 4MAT is een herhaalbaar stramien. Eenmaal onder de knie, geeft het een vaste, betrouwbare manier om elke les, workshop of instructie op te bouwen &mdash; en om bestaand materiaal te toetsen op eenzijdigheid.</p>
+  </section>
+
+  <section id="wat">
+    <div class="section-head"><span class="q q-what">Wat</span><h2>Het model</h2></div>
+    <p>4MAT combineert twee ideeën. Het eerste is Kolb's ervaringsleren: mensen verschillen in hoe ze informatie <strong>opnemen</strong> (via concrete ervaring of via abstracte concepten) en wat ze ermee <strong>doen</strong> (reflecteren of actief toepassen). Die twee assen leveren vier leerstijlen op. Het tweede is onderzoek naar links- en rechtshersenverwerking: de rechterhersenhelft werkt associatief en zoekt betekenis en patronen, de linkerhersenhelft werkt sequentieel en analyseert. McCarthy liet elke fase van de cyclus daarom telkens eerst een rechtermodus-stap en dan een linkermodus-stap doorlopen, wat de vier kwadranten opsplitst in acht stappen.</p>
+
+    <div class="diagram-wrap">
+      <div class="diagram-frame">
+        <svg class="compass" viewBox="-40 -40 480 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cirkeldiagram van de 4MAT-cyclus met vier kwadranten en acht stappen">
+          <g class="wedge">
+            <path d="M200,50 A150,150 0 0,1 350,200 L275,200 A75,75 0 0,0 200,125 Z" fill="var(--why-soft)"></path>
+            <path d="M350,200 A150,150 0 0,1 200,350 L200,275 A75,75 0 0,0 275,200 Z" fill="var(--what-soft)"></path>
+            <path d="M200,350 A150,150 0 0,1 50,200 L125,200 A75,75 0 0,0 200,275 Z" fill="var(--how-soft)"></path>
+            <path d="M50,200 A150,150 0 0,1 200,50 L200,125 A75,75 0 0,0 125,200 Z" fill="var(--if-soft)"></path>
+          </g>
+
+          <circle cx="200" cy="200" r="150" fill="none" stroke="var(--border-strong)" stroke-width="1"></circle>
+          <circle cx="200" cy="200" r="75" fill="var(--bg)" stroke="var(--border-strong)" stroke-width="1"></circle>
+          <line x1="200" y1="50" x2="200" y2="350" stroke="var(--bg)" stroke-width="2"></line>
+          <line x1="50" y1="200" x2="350" y2="200" stroke="var(--bg)" stroke-width="2"></line>
+
+          <text x="200" y="196" text-anchor="middle" class="center-label">4MAT</text>
+          <text x="200" y="212" text-anchor="middle" class="center-sub">CYCLUS</text>
+
+          <text x="279" y="116" text-anchor="middle" class="quad-label" fill="var(--why-ink)">Waarom</text>
+          <text x="279" y="132" text-anchor="middle" class="quad-sub" fill="var(--why-ink)">TYPE 1 &middot; IMAGINATIEF</text>
+
+          <text x="279" y="284" text-anchor="middle" class="quad-label" fill="var(--what-ink)">Wat</text>
+          <text x="279" y="300" text-anchor="middle" class="quad-sub" fill="var(--what-ink)">TYPE 2 &middot; ANALYTISCH</text>
+
+          <text x="121" y="284" text-anchor="middle" class="quad-label" fill="var(--how-ink)">Hoe</text>
+          <text x="121" y="300" text-anchor="middle" class="quad-sub" fill="var(--how-ink)">TYPE 3 &middot; PRAKTISCH</text>
+
+          <text x="121" y="116" text-anchor="middle" class="quad-label" fill="var(--if-ink)">Wat als</text>
+          <text x="121" y="132" text-anchor="middle" class="quad-sub" fill="var(--if-ink)">TYPE 4 &middot; DYNAMISCH</text>
+
+          <!-- step dots + numbers, r=165 -->
+          <circle cx="263.2" cy="47.5" r="12" class="step-dot" stroke="var(--why)"></circle>
+          <text x="263.2" y="51.5" text-anchor="middle" class="step-num" fill="var(--why-ink)">1</text>
+
+          <circle cx="352.4" cy="136.9" r="12" class="step-dot" stroke="var(--why)"></circle>
+          <text x="352.4" y="140.9" text-anchor="middle" class="step-num" fill="var(--why-ink)">2</text>
+
+          <circle cx="352.4" cy="263.1" r="12" class="step-dot" stroke="var(--what)"></circle>
+          <text x="352.4" y="267.1" text-anchor="middle" class="step-num" fill="var(--what-ink)">3</text>
+
+          <circle cx="263.2" cy="352.4" r="12" class="step-dot" stroke="var(--what)"></circle>
+          <text x="263.2" y="356.4" text-anchor="middle" class="step-num" fill="var(--what-ink)">4</text>
+
+          <circle cx="136.8" cy="352.4" r="12" class="step-dot" stroke="var(--how)"></circle>
+          <text x="136.8" y="356.4" text-anchor="middle" class="step-num" fill="var(--how-ink)">5</text>
+
+          <circle cx="47.6" cy="263.1" r="12" class="step-dot" stroke="var(--how)"></circle>
+          <text x="47.6" y="267.1" text-anchor="middle" class="step-num" fill="var(--how-ink)">6</text>
+
+          <circle cx="47.6" cy="136.9" r="12" class="step-dot" stroke="var(--if)"></circle>
+          <text x="47.6" y="140.9" text-anchor="middle" class="step-num" fill="var(--if-ink)">7</text>
+
+          <circle cx="136.8" cy="47.5" r="12" class="step-dot" stroke="var(--if)"></circle>
+          <text x="136.8" y="51.5" text-anchor="middle" class="step-num" fill="var(--if-ink)">8</text>
+
+          <!-- step name labels, r=205 -->
+          <text x="284" y="8" text-anchor="middle" class="step-label">Connect</text>
+          <text x="404" y="122" text-anchor="middle" class="step-label">Attend</text>
+          <text x="404" y="284" text-anchor="middle" class="step-label">Image</text>
+          <text x="284" y="398" text-anchor="middle" class="step-label">Inform</text>
+          <text x="116" y="398" text-anchor="middle" class="step-label">Practice</text>
+          <text x="-4" y="284" text-anchor="middle" class="step-label">Extend</text>
+          <text x="-4" y="122" text-anchor="middle" class="step-label">Refine</text>
+          <text x="116" y="8" text-anchor="middle" class="step-label">Perform</text>
+        </svg>
+      </div>
+    </div>
+    <div class="diagram-legend">
+      <span><span class="legend-dot" style="background:var(--why)"></span>Waarom &middot; ervaren</span>
+      <span><span class="legend-dot" style="background:var(--what)"></span>Wat &middot; begrijpen</span>
+      <span><span class="legend-dot" style="background:var(--how)"></span>Hoe &middot; toepassen</span>
+      <span><span class="legend-dot" style="background:var(--if)"></span>Wat als &middot; verrijken</span>
+    </div>
+
+    <p style="margin-top:2.2rem">De cyclus doorloopt telkens vier leerprofielen, elk met een eigen kernvraag:</p>
+
+    <div class="type-grid">
+      <div class="type-card why">
+        <p class="kicker">Type 1 &middot; Waarom</p>
+        <h3>Imaginatieve leerder</h3>
+        <p>Leert via ervaring en reflectie. Zoekt persoonlijke betekenis en verbinding met anderen voordat de inhoud er voor hen toe doet.</p>
+        <p class="ask">&ldquo;Waarom moet ik dit leren?&rdquo;</p>
+      </div>
+      <div class="type-card what">
+        <p class="kicker">Type 2 &middot; Wat</p>
+        <h3>Analytische leerder</h3>
+        <p>Leert via reflectie op concepten. Wil feiten, theorie en een kloppend logisch geheel voordat er iets gebeurt.</p>
+        <p class="ask">&ldquo;Wat moet ik precies weten?&rdquo;</p>
+      </div>
+      <div class="type-card how">
+        <p class="kicker">Type 3 &middot; Hoe</p>
+        <h3>Praktische leerder</h3>
+        <p>Leert door te doen. Wil de theorie meteen testen en werkend krijgen &mdash; het liefst met de handen aan de knoppen.</p>
+        <p class="ask">&ldquo;Hoe werkt dit in de praktijk?&rdquo;</p>
+      </div>
+      <div class="type-card if">
+        <p class="kicker">Type 4 &middot; Wat als</p>
+        <h3>Dynamische leerder</h3>
+        <p>Leert via zelf ontdekken en uitproberen. Wil variëren, combineren en het geleerde naar eigen inzicht ombuigen.</p>
+        <p class="ask">&ldquo;Wat als ik dit anders gebruik?&rdquo;</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem">Iedereen doorloopt in principe alle acht stappen, maar de meeste mensen voelen zich merkbaar meer thuis in één of twee kwadranten. Dat maakt het model ook bruikbaar als zelfkennis: herken je eigen voorkeur, en oefen bewust de stappen die je van nature overslaat.</p>
+
+    <div class="table-scroll">
+      <table class="steps">
+        <thead>
+          <tr><th></th><th>Stap</th><th>Kwadrant</th><th>Wat er gebeurt</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num-cell">1</td>
+            <td><span class="step-name">Connect</span><span class="mode-pill">rechts</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--why)"></span>Waarom</td>
+            <td>Een herkenbare, persoonlijke ervaring oproepen die het onderwerp relevant maakt.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">2</td>
+            <td><span class="step-name">Attend</span><span class="mode-pill">links</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--why)"></span>Waarom</td>
+            <td>Die ervaring samen onderzoeken en er patronen of vragen uit halen.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">3</td>
+            <td><span class="step-name">Image</span><span class="mode-pill">rechts</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--what)"></span>Wat</td>
+            <td>Een beeld of metafoor die de brug slaat van concrete ervaring naar abstract concept.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">4</td>
+            <td><span class="step-name">Inform</span><span class="mode-pill">links</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--what)"></span>Wat</td>
+            <td>De kernkennis, theorie of feiten overdragen &mdash; het klassieke &ldquo;uitleggen&rdquo;.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">5</td>
+            <td><span class="step-name">Practice</span><span class="mode-pill">links</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--how)"></span>Hoe</td>
+            <td>Begeleide oefening: het concept toepassen volgens een vaste, aangereikte procedure.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">6</td>
+            <td><span class="step-name">Extend</span><span class="mode-pill">rechts</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--how)"></span>Hoe</td>
+            <td>Vrijer toepassen: het geleerde inzetten in een eigen, minder gestuurde situatie.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">7</td>
+            <td><span class="step-name">Refine</span><span class="mode-pill">links</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--if)"></span>Wat als</td>
+            <td>Analyseren en bijschaven op basis van feedback of zelfreflectie.</td>
+          </tr>
+          <tr>
+            <td class="num-cell">8</td>
+            <td><span class="step-name">Perform</span><span class="mode-pill">rechts</span></td>
+            <td class="quad-cell"><span class="swatch" style="background:var(--if)"></span>Wat als</td>
+            <td>Laten zien wat je hebt geleerd: uitleggen, presenteren of echt toepassen.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="wanneer">
+    <div class="section-head"><span class="q q-how">Hoe &amp; wanneer</span><h2>Toepassen in de praktijk</h2></div>
+    <p>4MAT is een ontwerpmodel, geen checklist die je bij elke zin toepast. Het loont vooral op momenten waarop je een leerervaring vooraf opbouwt voor een groep of voor jezelf.</p>
+
+    <div class="use-grid">
+      <div class="use-col yes">
+        <h3>Zet het in bij</h3>
+        <ul>
+          <li>Het ontwerpen van een les, training, workshop of onboarding</li>
+          <li>Een presentatie of pitch voor een gemengd publiek</li>
+          <li>Het toetsen van bestaand materiaal: spreekt het maar één leerstijl aan?</li>
+          <li>Zelfstudie van een lastig onderwerp &mdash; stel jezelf de vier vragen</li>
+          <li>Curriculum- of e-learningontwerp waarin herhaalbaarheid nodig is</li>
+        </ul>
+      </div>
+      <div class="use-col no">
+        <h3>Minder nodig bij</h3>
+        <ul>
+          <li>Eén-op-één coaching waarbij je de leerstijl al kent en al bedient</li>
+          <li>Korte feitelijke lookups zonder leerdoel</li>
+          <li>Momenten waarin snelheid belangrijker is dan diepgang</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:2.2rem">Voor het ontwerpen van een sessie is dit de praktische volgorde:</p>
+
+    <ol class="checklist">
+      <li><span class="n">01</span><div><strong>Connect &mdash; open met &ldquo;waarom&rdquo;</strong><span class="desc">Begin met een herkenbare situatie, vraag of anekdote uit de leefwereld van de leerling, geen definitie.</span></div></li>
+      <li><span class="n">02</span><div><strong>Attend &mdash; laat reflecteren</strong><span class="desc">Laat de groep die ervaring bespreken: wat viel op, wat riep vragen op?</span></div></li>
+      <li><span class="n">03</span><div><strong>Image &mdash; bouw de brug</strong><span class="desc">Gebruik een beeld, metafoor of model dat de ervaring verbindt met het komende concept.</span></div></li>
+      <li><span class="n">04</span><div><strong>Inform &mdash; geef de theorie</strong><span class="desc">Draag nu pas de kernkennis over &mdash; de leerling heeft al een haak om ze aan op te hangen.</span></div></li>
+      <li><span class="n">05</span><div><strong>Practice &mdash; laat geleid oefenen</strong><span class="desc">Geef een gestructureerde oefening met een duidelijk goed antwoord.</span></div></li>
+      <li><span class="n">06</span><div><strong>Extend &mdash; geef ruimte</strong><span class="desc">Laat het geleerde toepassen op een eigen casus, project of vraagstuk.</span></div></li>
+      <li><span class="n">07</span><div><strong>Refine &mdash; stuur bij</strong><span class="desc">Bied feedback of peer review, en laat bijschaven.</span></div></li>
+      <li><span class="n">08</span><div><strong>Perform &mdash; laat presteren</strong><span class="desc">Laat het resultaat tonen, uitleggen aan anderen of echt inzetten &mdash; zo sluit de cyclus.</span></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="eyebrow">Wat als &middot; verder oefenen</p>
+      <p>De snelste manier om het model eigen te maken is het één keer klein toe te passen: pak een onderwerp dat je binnenkort moet uitleggen, en schrijf voor elk van de vier vragen &eacute;&eacute;n zin op &mdash; waarom het ertoe doet, wat de kern is, hoe je het toepast, en wat er gebeurt als je ermee experimenteert. Zelfs in een gesprek van vijf minuten werkt die mini-cyclus al.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Bronnen</p>
+    <ul>
+      <li><a href="https://4mat4learning.com.au/what-is-4mat/">4MAT 4Learning &mdash; What is 4MAT</a></li>
+      <li><a href="https://www.toolshero.com/personal-development/4mat-learning-cycle-model/">Toolshero &mdash; 4MAT Learning Styles Model</a></li>
+    </ul>
+  </footer>
+
+</div>
